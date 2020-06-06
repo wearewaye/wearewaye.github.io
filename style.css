@@ -86,26 +86,6 @@ a:hover{text-decoration: none; cursor:pointer;}
 	align-self: flex-end;
 }
 
-/* = Full Width Blocs 
--------------------------------------------------------------- */
-
-.full-width-bloc{
-	padding-left:0;
-	padding-right:0;
-}
-.full-width-bloc .row{
-	margin-left:0;
-	margin-right:0;
-}
-.full-width-bloc .container{
-	width:100%;
-	max-width:100%!important;
-}
-.full-width-bloc .carousel img{
-	width:100%;
-	height:auto;
-}
-
 
 /* Group Styles */
 
@@ -368,11 +348,6 @@ button{
 
 
 
-/* iFrame */
-
-iframe{
-	border:0;
-}
 
 
 /* ScrollToTop button */
@@ -485,9 +460,6 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 .tc-black{
 	color:#000000!important;
 }
-.tc-white-2{
-	color:#FFFFFF!important;
-}
 
 /* Icon colour styles */
 
@@ -506,23 +478,11 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 
 /* Bloc image backgrounds */
 
-.bg-MOSHED-2019-11-6-1-40-20{
-	background-image:url("img/MOSHED-2019-11-6-1-40-20.gif");
-}
 .bg-MOSHED-2019-11-6-21-11-35{
 	background-image:url("img/MOSHED-2019-11-6-21-11-35.gif");
 }
 .bg-MOSHED-2019-11-6-21-16-31{
 	background-image:url("img/MOSHED-2019-11-6-21-16-31.gif");
-}
-.bg-MOSHED-2019-5-20-11-57-0{
-	background-image:url("img/MOSHED-2019-5-20-11-57-0.gif");
-}
-.bg-MOSHED-2019-11-6-1-41-21{
-	background-image:url("img/MOSHED-2019-11-6-1-41-21.gif");
-}
-.bg-MOSHED-2019-11-6-1-38-56{
-	background-image:url("img/MOSHED-2019-11-6-1-38-56.gif");
 }
 .bg-dots-bg{
 	background-image:url("img/dots-bg.png");
