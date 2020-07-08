@@ -20,6 +20,17 @@ a:hover{text-decoration: none; cursor:pointer;}
 
 .page-preloader{position: fixed;top: 0;bottom: 0;width: 100%;z-index:100000;background:#FFFFFF url("img/pageload-spinner.gif") no-repeat center center;}
 
+/* = Web Fonts
+-------------------------------------------------------------- */
+
+@font-face {
+	font-family:'HansonBold';
+	src: url('./fonts/HansonBold/Hanson-Bold.ttf');
+	src: url('./fonts/HansonBold/Hanson-Bold.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
 /* = Blocs
 -------------------------------------------------------------- */
 
@@ -327,6 +338,14 @@ button{
 	box-shadow: none;
 	padding:0;
 }
+.a-block{
+	width:100%;
+	text-align:left;
+	display: inline-block;
+}
+.text-center .a-block{
+	text-align:center;
+}
 
 /* = Icons
 -------------------------------------------------------------- */
@@ -414,6 +433,8 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 .h1-style{
 	width:78.47%;
 	font-size:48px;
+	font-family:"Open Sans";
+	font-weight:400;
 }
 .p-style{
 	width:77.57%;
@@ -422,7 +443,7 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 	margin-left:30px;
 }
 .h1-2-style{
-	font-family:"Open Sans";
+	font-family:"HansonBold";
 	font-weight:800;
 }
 .img-style{
@@ -435,18 +456,18 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 	padding-top:20px;
 }
 .h1---who-we-are-style{
-	font-family:"Open Sans";
+	font-family:"HansonBold";
 	font-weight:800;
 }
 .icon{
 	margin-left:30px;
 }
 .h1-6-style{
-	font-family:"Open Sans";
+	font-family:"HansonBold";
 	font-weight:800;
 }
 .h1---our-mission-style{
-	font-family:"Open Sans";
+	font-family:"HansonBold";
 	font-weight:800;
 }
 .h3-bloc-15-style{
@@ -480,6 +501,15 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 	float:none;
 	overflow:visible;
 	padding:0px 10px 10px 10px;
+}
+.h1-bloc-9-style{
+	font-family:"HansonBold";
+}
+.h1-bloc-10-style{
+	font-family:"HansonBold";
+}
+.pad{
+	padding-top:105px;
 }
 
 /* = Colour
@@ -540,6 +570,9 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 }
 .bg-dots-bg{
 	background-image:url("img/dots-bg.png");
+}
+.bg-soooon{
+	background-image:url("img/soooon.gif");
 }
 .bg-maronn3{
 	background-image:url("img/maronn3.gif");
@@ -635,6 +668,9 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 
 @media (max-width: 575px){
 	.mt-1{
+	}
+	.footer-link{
+		text-align:center;
 	}
 	
 }
