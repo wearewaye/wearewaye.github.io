@@ -70,6 +70,7 @@ a:hover{text-decoration: none; cursor:pointer;}
 	align-self: flex-middle;
 	flex-grow: 1;
 	display: flex;
+	flex-wrap: wrap;
 }
 .bloc-fill-screen > .container > .row{
 	flex-grow: 1;
@@ -292,9 +293,17 @@ a:hover{text-decoration: none; cursor:pointer;}
 .mg-clear{
 	margin:0;
 }
+.mg-sm{
+	margin-top:10px;
+	margin-bottom:5px;
+}
 .mg-md{
 	margin-top:10px;
 	margin-bottom:20px;
+}
+.mg-lg{
+	margin-top:10px;
+	margin-bottom:40px;
 }
 
 /* = Buttons
@@ -310,6 +319,14 @@ button{
 	outline: none!important;
 }
 
+.btn-sq{
+	border-radius: 0px;
+}
+.btn-style-none,.btn-style-none:hover,.btn-style-none:active,.btn-style-none:focus{
+	background:none;
+	box-shadow: none;
+	padding:0;
+}
 
 /* = Icons
 -------------------------------------------------------------- */
@@ -368,6 +385,11 @@ button{
 .showScrollTop{
 	font-size: 14px;
 	opacity: 1;
+}
+
+/* Hide Object */
+.object-hidden{
+	display:none;
 }
 
 /* = Custom Styling
@@ -433,6 +455,32 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 .img-sooo-style{
 	width:6402px;
 }
+.img-13-style{
+	width:480px;
+}
+.btn-style{
+	text-decoration:underline;
+}
+.imagi{
+	padding-bottom:20px;
+}
+.bottone{
+	font-size:32px;
+	text-align:left;
+}
+.btn-swan-song-style{
+	width:66.92%;
+}
+.btn-bloc-6-style{
+	width:65.4%;
+}
+.padded{
+	margin-top:10px;
+	display:block;
+	float:none;
+	overflow:visible;
+	padding:0px 10px 10px 10px;
+}
 
 /* = Colour
 -------------------------------------------------------------- */
@@ -478,17 +526,29 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 
 /* Bloc image backgrounds */
 
+.bg-MOSHED-2019-11-6-1-40-20{
+	background-image:url("img/MOSHED-2019-11-6-1-40-20.gif");
+}
 .bg-MOSHED-2019-11-6-21-11-35{
 	background-image:url("img/MOSHED-2019-11-6-21-11-35.gif");
 }
 .bg-MOSHED-2019-11-6-21-16-31{
 	background-image:url("img/MOSHED-2019-11-6-21-16-31.gif");
 }
+.bg-MOSHED-2019-11-6-1-38-56{
+	background-image:url("img/MOSHED-2019-11-6-1-38-56.gif");
+}
 .bg-dots-bg{
 	background-image:url("img/dots-bg.png");
 }
 .bg-maronn3{
 	background-image:url("img/maronn3.gif");
+}
+.bg-MOSHED-2020-6-5-11-53-49{
+	background-image:url("img/MOSHED-2020-6-5-11-53-49.gif");
+}
+.bg-MOSHED-2019-5-15-14-0-18{
+	background-image:url("img/MOSHED-2019-5-15-14-0-18.gif");
 }
 
 
@@ -554,12 +614,27 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 	   height: 320px;
     }
 }
+
+@media (max-width: 991px){
+	.mt-md-0{
+	}
+	.mt-md-4{
+	}
+	
+}
+
 @media (max-width: 767px){
 	.text-right{
 	}
 	.text-left{
 	}
 	.text-center{
+	}
+	
+}
+
+@media (max-width: 575px){
+	.mt-1{
 	}
 	
 }
