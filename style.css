@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------------------
-	    wayePROVA_progetti-2
+	    waye_sito2
         Built with Blocs
 -----------------------------------------------------------------------------------*/
  
@@ -59,9 +59,6 @@ a:hover{text-decoration: none; cursor:pointer;}
 }
 .bloc-lg{
 	padding:100px 50px;
-}
-.bloc-md{
-	padding:50px;
 }
 .bloc-sm{
 	padding:20px 50px;
@@ -126,6 +123,9 @@ a:hover{text-decoration: none; cursor:pointer;}
 	-o-background-size: auto!important;
 	background-size: auto!important;
 }
+.bg-center{
+	-webkit-background-size: auto;
+}
 .bg-repeat{
 	background:repeat;
 }
@@ -165,9 +165,6 @@ a:hover{text-decoration: none; cursor:pointer;}
 }
 .texture-darken::before{
 	background: rgba(0,0,0,0.5);
-}
-.texture-darken-strong::before{
-	background: rgba(0,0,0,0.8);
 }
 
 
@@ -267,12 +264,6 @@ a:hover{text-decoration: none; cursor:pointer;}
 
 .voffset{
 	margin-top:30px;
-}
-/* Dividers */
-
-.b-divider-dashed{
-	border-top:1px dashed rgba(0,0,0,.1);
-	border-bottom:1px dashed rgba(0,0,0,.1);
 }
 
 
@@ -511,6 +502,10 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 .pad{
 	padding-top:105px;
 }
+.space{
+	padding-right:40px;
+	padding-left:40px;
+}
 
 /* = Colour
 -------------------------------------------------------------- */
@@ -522,9 +517,6 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 }
 .bgc-white{
 	background-color:#FFFFFF;
-}
-.bgc-black-2{
-	background-color:#000000;
 }
 .bgc-white-2{
 	background-color:#FFFFFF;
@@ -549,10 +541,6 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 	color:#000000!important;
 	border-color:#000000!important;
 }
-.icon-black-2{
-	color:#000000!important;
-	border-color:#000000!important;
-}
 
 /* Bloc image backgrounds */
 
@@ -568,20 +556,17 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 .bg-MOSHED-2019-11-6-1-38-56{
 	background-image:url("img/MOSHED-2019-11-6-1-38-56.gif");
 }
-.bg-dots-bg{
-	background-image:url("img/dots-bg.png");
-}
 .bg-soooon{
 	background-image:url("img/soooon.gif");
-}
-.bg-maronn3{
-	background-image:url("img/maronn3.gif");
 }
 .bg-MOSHED-2020-6-5-11-53-49{
 	background-image:url("img/MOSHED-2020-6-5-11-53-49.gif");
 }
-.bg-MOSHED-2019-5-15-14-0-18{
-	background-image:url("img/MOSHED-2019-5-15-14-0-18.gif");
+.bg-MOSHED-2020-7-9-20-14-16{
+	background-image:url("img/MOSHED-2020-7-9-20-14-16.gif");
+}
+.bg-MOSHED-2020-7-9-21-14-0{
+	background-image:url("img/MOSHED-2020-7-9-21-14-0.gif");
 }
 
 
