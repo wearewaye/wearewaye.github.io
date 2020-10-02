@@ -479,6 +479,7 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 .bottone{
 	font-size:32px;
 	text-align:left;
+	color:#FEFFFE!important;
 }
 .btn-swan-song-style{
 	width:66.92%;
@@ -512,11 +513,11 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 
 /* Background colour styles */
 
-.bgc-black{
-	background-color:#000000;
-}
 .bgc-white{
 	background-color:#FFFFFF;
+}
+.bgc-black{
+	background-color:#000000;
 }
 .bgc-white-2{
 	background-color:#FFFFFF;
@@ -570,6 +571,9 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 }
 .bg-ezgif-com-resize{
 	background-image:url("img/ezgif.com-resize.gif");
+}
+.bg-MOSHED-2020-10-2-18-27-36{
+	background-image:url("img/MOSHED-2020-10-2-18-27-36.gif");
 }
 
 
