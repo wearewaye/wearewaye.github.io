@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------------------
-	    waye_sito2
+	    wayeNOV2020
         Built with Blocs
 -----------------------------------------------------------------------------------*/
  
@@ -93,6 +93,26 @@ a:hover{text-decoration: none; cursor:pointer;}
 }
 .bloc-fill-screen .fill-bloc-bottom-edge{
 	align-self: flex-end;
+}
+
+/* = Full Width Blocs 
+-------------------------------------------------------------- */
+
+.full-width-bloc{
+	padding-left:0;
+	padding-right:0;
+}
+.full-width-bloc .row{
+	margin-left:0;
+	margin-right:0;
+}
+.full-width-bloc .container{
+	width:100%;
+	max-width:100%!important;
+}
+.full-width-bloc .carousel img{
+	width:100%;
+	height:auto;
 }
 
 
@@ -375,6 +395,10 @@ button{
 
 
 
+/* Scroll FX */
+.scroll-fx-in-range{
+	will-change: opacity;
+}
 
 
 /* ScrollToTop button */
@@ -574,6 +598,9 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 }
 .bg-MOSHED-2020-10-2-18-27-36{
 	background-image:url("img/MOSHED-2020-10-2-18-27-36.gif");
+}
+.bg-MOSHED-2020-11-11-10-51-39{
+	background-image:url("img/MOSHED-2020-11-11-10-51-39.gif");
 }
 
 
