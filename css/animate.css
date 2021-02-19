@@ -3797,5 +3797,7 @@
   .mob-disable-anim .animated{
     animation-duration: 0s;
     -webkit-animation-duration: 0s;
+    animation-delay: 0s;
+    -webkit-animation-delay: 0s;
   } 
 }

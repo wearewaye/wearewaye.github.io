@@ -48,7 +48,7 @@ function setUpSpecialNavs()
 				}
 				
 				newMenu.insertBefore('.page-container').wrap('<div class="blocsapp-special-menu '+navClasses+'"><blocsnav class="'+menuClasses+'">');
-				$('blocsnav').prepend('<a class="close-special-menu animated fadeIn" style="animation-delay:0.5s;"><div class="close-icon"></div></a>');
+				$('blocsnav').prepend('<a class="close-special-menu animated fadeIn animDelay06"><div class="close-icon"></div></a>');
 				
 				animateNavItems(); // Animate Nav Items
 
@@ -60,6 +60,7 @@ function setUpSpecialNavs()
 			}
 			else // Close menu
 			{
+				$('.close-special-menu').toggleClass('fadeOut fadeIn animDelay06 animSpeed02');
 				$('.blocsapp-special-menu blocsnav').removeClass('open');
 				$('.selected-nav').removeClass('selected-nav');
 				
@@ -269,48 +270,54 @@ function stickyNavToggle()
 {
 	if ($('.sticky-nav').length)
 	{
-		var offsetVal = $('.sticky-nav').offset().top; // offset Value
+		var stickyNav = $('.sticky-nav');
+		var offsetVal = stickyNav.offset().top; // Offset Value
 		var classes = "sticky"; // Classes
 		var targetContainer = $('.page-container');
-		var isFillScreenSticky = $('.sticky-nav').hasClass('fill-bloc-top-edge');
+		var isFillScreenSticky = stickyNav.hasClass('fill-bloc-top-edge');
 		
 		if (isFillScreenSticky) // Nav in Hero Bloc
 		{
 			targetContainer = $('.fill-bloc-top-edge.sticky-nav').parent();
-			classes = "sticky animated fadeInDown"; 
+			classes = "sticky animated fadeInDown";
 		}
 
-		if ($('.sticky-nav').hasClass('sticky')) // Use original offset
+		if (stickyNav.hasClass('sticky')) // Use original offset
 		{
-			offsetVal = $('.sticky-nav').attr('data-original-offset')
+			offsetVal = stickyNav.attr('data-original-offset')
 		}
 
-		if ($(window).scrollTop() > offsetVal)
+		if ($(window).scrollTop() > offsetVal) // Scroll Window
 		{  
-			if (!$('.sticky-nav').hasClass('sticky')) // Add Sticky
+			if (!stickyNav.hasClass('sticky')) // Add Sticky
 			{
-				$('.sticky-nav').addClass(classes).attr('data-original-offset',offsetVal);
-				offsetVal = $('.sticky-nav').height();
+				stickyNav.addClass(classes).attr('data-original-offset',offsetVal);
+				offsetVal = stickyNav.height();
 
 				if (isFillScreenSticky)
 				{
-					// Set BG Color
-					var bgColor = targetContainer.css('background-color');
-					if (bgColor == "rgba(0, 0, 0, 0)") bgColor = '#FFFFFF';
-					$('.sticky-nav').css('background', bgColor);
-
+					stickyNav.css('background', getBlocBgColor(targetContainer));
 					offsetVal += parseInt(targetContainer.css('padding-top')); 
 				}
 
 				targetContainer.css('padding-top',offsetVal);
 			}
 		}
-		else if ($('.sticky-nav').hasClass('sticky')) // Remove Sticky
+		else if (stickyNav.hasClass('sticky')) // Remove Sticky
 		{
-			$('.sticky-nav').removeClass(classes).removeAttr('style');
+			stickyNav.removeClass(classes).removeAttr('style');
 			targetContainer.removeAttr('style');
 		}
 	}	
+}
+
+// Get Bloc Background Color
+function getBlocBgColor(targetContainer)
+{
+	var bgColor = targetContainer.css('background-color');
+	if (targetContainer.hasClass('b-parallax')) bgColor = targetContainer.find('.parallax').css('background-color'); // Has Parallax
+	if (bgColor == "rgba(0, 0, 0, 0)") bgColor = '#FFFFFF'; // Prevent Transparent
+	return bgColor;
 }
 
 // Hide all animation elements
@@ -318,7 +325,14 @@ function hideAll()
 {
 	$('.animated').each(function(i)
 	{	
-		if (!$(this).closest('.hero').length) // Dont hide hero object
+		if ($("body").hasClass('mob-disable-anim')) // Disable Animation on Mobile
+		{
+			if ($(window).width() > 767) // Desktop Breakpoint
+			{
+				$(this).removeClass('animated').addClass('hideMe');
+			}
+		}
+		else
 		{
 			$(this).removeClass('animated').addClass('hideMe');
 		}
@@ -673,8 +687,8 @@ function addLightBoxSwipeSupport()
 // Set Up Image protection
 function setUpImgProtection()
 {
-	$("body .img-protected").on("contextmenu",function(e){return false;});
-	$(".img-protected").mousedown(function(e){e.preventDefault()});
+	$('body').on("contextmenu",".img-protected",function(e){return false;});
+	$('body').on("mousedown",".img-protected",function(e){e.preventDefault()});
 }
 
 
