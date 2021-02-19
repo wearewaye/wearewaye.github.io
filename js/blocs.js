@@ -2,13 +2,11 @@
 
 $(function(){
 	extraNavFuncs(); // Extra Nav Functions
-	setUpSpecialNavs(); // Special Nav Bars 
-	setUpDropdownSubs(); // Dropdown Menu Support
-	setUpLightBox(); // Lightbox
-	setUpVisibilityToggle(); // Toggle Visibility 
-	setUpClassToggle(); // Toggle Class
-	addKeyBoardSupport(); // Add Keyboard Support (Used for Lightbox Nav)
-	setUpImgProtection(); // Set Up Image Protection
+	setUpSpecialNavs(); // Set Up Special NavBars 
+	setUpDropdownSubs(); // Set Up Dropdown Menu Support
+	setUpLightBox(); // Add lightbox Support
+	setUpVisibilityToggle(); // Add visibility Toggle Support
+	addKeyBoardSupport(); // Add Keyboard Support - Used for Lightbox Nav
 	
 	$('a[onclick^="scrollToTarget"]').click(function(e){e.preventDefault()}); // Prevent page jump on scroll to links
 	$('.nav-item [data-active-page]').addClass($('.nav-item [data-active-page]').attr('data-active-page')); // Apply Active Link Classes
@@ -19,7 +17,7 @@ $(function(){
 $(window).on('load', function()
 {
 	animateWhenVisible();  // Activate animation when visible	
-	$('#page-loading-blocs-notifaction').addClass('preloader-complete'); // Remove page loading UI
+	$('#page-loading-blocs-notifaction').remove(); // Remove page loading UI
 })
 
 // Set Up Special NavBars 
@@ -267,49 +265,43 @@ function setUpDropdownSubs()
 // Sticky Nav Bar Toggle On / Off
 function stickyNavToggle()
 {
-	if ($('.sticky-nav').length)
+	var offsetVal = 0; // offset Value
+	var classes = "sticky"; // Classes
+	var targetContainer = $('.page-container');
+	var isFillScreenSticky = $('.sticky-nav').hasClass('fill-bloc-top-edge');
+	
+	if (isFillScreenSticky) // Nav in hero Bloc
 	{
-		var offsetVal = $('.sticky-nav').offset().top; // offset Value
-		var classes = "sticky"; // Classes
-		var targetContainer = $('.page-container');
-		var isFillScreenSticky = $('.sticky-nav').hasClass('fill-bloc-top-edge');
-		
-		if (isFillScreenSticky) // Nav in Hero Bloc
+		console.log('fill screen');
+		targetContainer = $('.fill-bloc-top-edge.sticky-nav').parent();
+		offsetVal = $('.sticky-nav').height();
+		classes = "sticky animated fadeInDown"; 
+	}
+	
+	if ($(window).scrollTop() > offsetVal)
+	{  
+		if (!$('.sticky-nav').hasClass('sticky')) // Add Sticky
 		{
-			targetContainer = $('.fill-bloc-top-edge.sticky-nav').parent();
-			classes = "sticky animated fadeInDown"; 
-		}
+			$('.sticky-nav').addClass(classes);
+			offsetVal = $('.sticky-nav').height();
 
-		if ($('.sticky-nav').hasClass('sticky')) // Use original offset
-		{
-			offsetVal = $('.sticky-nav').attr('data-original-offset')
-		}
-
-		if ($(window).scrollTop() > offsetVal)
-		{  
-			if (!$('.sticky-nav').hasClass('sticky')) // Add Sticky
+			if (isFillScreenSticky)
 			{
-				$('.sticky-nav').addClass(classes).attr('data-original-offset',offsetVal);
-				offsetVal = $('.sticky-nav').height();
+				// Set BG Color
+				var bgColor = targetContainer.css('background-color');
+				if (bgColor == "rgba(0, 0, 0, 0)") bgColor = '#FFFFFF';
+				$('.sticky-nav').css('background', bgColor);
 
-				if (isFillScreenSticky)
-				{
-					// Set BG Color
-					var bgColor = targetContainer.css('background-color');
-					if (bgColor == "rgba(0, 0, 0, 0)") bgColor = '#FFFFFF';
-					$('.sticky-nav').css('background', bgColor);
-
-					offsetVal += parseInt(targetContainer.css('padding-top')); 
-				}
-
-				targetContainer.css('padding-top',offsetVal);
+				offsetVal += parseInt(targetContainer.css('padding-top')); 
 			}
+
+			targetContainer.css('padding-top',offsetVal);
 		}
-		else if ($('.sticky-nav').hasClass('sticky')) // Remove Sticky
-		{
-			$('.sticky-nav').removeClass(classes).removeAttr('style');
-			targetContainer.removeAttr('style');
-		}
+	}
+	else if ($('.sticky-nav').hasClass('sticky')) // Remove Sticky
+	{
+		$('.sticky-nav').removeClass(classes).removeAttr('style');
+		targetContainer.removeAttr('style');
 	}	
 }
 
@@ -405,38 +397,6 @@ function setUpVisibilityToggle()
 			{
 				T.slideToggle();
 			}
-
-			reCalculateParallax();
-		}
-	});
-}
-
-// Toggle Classes On Objects
-function setUpClassToggle()
-{
-	$(document).on('click', '[data-toggle-class-target]', function(e)
-	{
-		e.preventDefault();
-		var targetID = $(this).attr('data-toggle-class-target');
-		var targetClass = $(this).attr('data-toggle-class');
-
-		if (targetClass.length)
-		{
-			if (targetID.indexOf(',')!=-1) // Is Array
-			{
-				var targeArray = targetID.split(',');
-				
-				$.each(targeArray, function(i) // Loop Array
-				{
-					$('#'+targeArray[i]).toggleClass(targetClass);
-				});
-			}
-			else // Single
-			{
-				$('#'+targetID).toggleClass(targetClass);
-			}
-
-			reCalculateParallax();
 		}
 	});
 }
@@ -455,7 +415,7 @@ function setUpLightBox()
 		var captionData ='<p class="lightbox-caption">'+targetLightbox.attr('data-caption')+'</p>';
 		var galleryID = 'no-gallery-set';
 		var lightBoxFrame = targetLightbox.attr('data-frame');
-
+		
 		if (targetLightbox.attr('data-gallery-id')) // Has a gallery ID so use it
 		{
 			galleryID = targetLightbox.attr('data-gallery-id');
@@ -468,19 +428,7 @@ function setUpLightBox()
 			autoplay = "autoplay";
 		}
 
-		var protectionClass = ""; // No Auto Play default
-
-		if (targetLightbox.find('img').hasClass('img-protected')) // Image Protection
-		{
-			protectionClass = "img-protected";
-		}
-
-
-		var leftArrow = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32"><path class="lightbox-nav-icon lightbox-prev-icon" d="M22,2L9,16,22,30"/></svg>';
-		var rightArrow = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32"><path class="lightbox-nav-icon lightbox-next-icon" d="M10.344,2l13,14-13,14"/></svg>';
-		var closeIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 32 32"><path class="lightbox-close-icon" d="M4,4L28,28"/><path class="lightbox-close-icon" d="M28,4L4,28"/></svg>';
-
-		var customModal = $('<div id="lightbox-modal" class="modal fade"><div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content '+lightBoxFrame+' blocs-lb-container"><button id="blocs-lightbox-close-btn" type="button" class="close-lightbox" data-dismiss="modal" aria-label="Close">'+closeIcon+'</button><div class="modal-body"><a href="#" class="prev-lightbox" aria-label="prev">'+leftArrow+'</a><a href="#" class="next-lightbox" aria-label="next">'+rightArrow+'</a><img id="lightbox-image" class="img-fluid mx-auto d-block '+protectionClass+'" src="'+lightBoxPath+'"><div id="lightbox-video-container" class="embed-responsive embed-responsive-16by9"><video controls '+autoplay+' class="embed-responsive-item"><source id="lightbox-video" src="'+lightBoxPath+'" type="video/mp4"></video></div>'+captionData+'</div></div></div></div>');
+		var customModal = $('<div id="lightbox-modal" class="modal fade"><div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content '+lightBoxFrame+' blocs-lb-container"><button id="blocs-lightbox-close-btn" type="button" class="close-lightbox" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><div class="modal-body"><a href="#" class="prev-lightbox" aria-label="prev"><span class="fa fa-chevron-left"></span></a><a href="#" class="next-lightbox" aria-label="next"><span class="fa fa-chevron-right"></span></a><img id="lightbox-image" class="img-fluid mx-auto d-block" src="'+lightBoxPath+'"><div id="lightbox-video-container" class="embed-responsive embed-responsive-16by9"><video controls '+autoplay+' class="embed-responsive-item"><source id="lightbox-video" src="'+lightBoxPath+'" type="video/mp4"></video></div>'+captionData+'</div></div></div></div>');
 		$('body').append(customModal);
 		
 		if (lightBoxFrame == "fullscreen-lb") // Full Screen Light Box
@@ -667,24 +615,5 @@ function addLightBoxSwipeSupport()
 			},
 			threshold:0
 		});
-	}
-}
-
-// Set Up Image protection
-function setUpImgProtection()
-{
-	$("body .img-protected").on("contextmenu",function(e){return false;});
-	$(".img-protected").mousedown(function(e){e.preventDefault()});
-}
-
-
-// Recalculate Parallax
-function reCalculateParallax()
-{
-	if ($('.b-parallax').length) // Has Parallax
-	{
-		var parallax = $('.parallax__container .parallax');
-		parallax.css('height','100%');
-		setTimeout(function(){calculateHeight(parallax,3)}, 400);
 	}
 }

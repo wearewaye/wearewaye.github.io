@@ -8,9 +8,9 @@ var lastScrollTop = 0;
 function scrollFX()
 {
 	var docHeight = $(document).height();
-	var windowH = $(window).height();
+	var windowHeight = $(window).height();
 
-	if (docHeight != windowH) // Prevent Scroll FX on documents that match window height
+	if (docHeight != windowHeight) // Prevent Scroll FX on documents that match window height
 	{
 		// Get Scroll Direction
 		var currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -20,6 +20,7 @@ function scrollFX()
 		$('[class*="scroll-fx-up-"], [class*="scroll-fx-down-"], [class*="scroll-fx-left-"], [class*="scroll-fx-right-"], [class*="scroll-fx-in-fade"], [class*="scroll-fx-out-fade"], [class*="scroll-fx-zoom-"]').each(function(i)
 		{
 			var targetObj = $(this);
+			var windowH = $(window).height();
 			var windowMax = $(window).scrollTop()+(windowH*3);
 			
 			if (targetObj.offset().top < windowMax) // Only animate when within range
@@ -34,27 +35,19 @@ function scrollFX()
 				var scrollVal = $(window).scrollTop() - targetObj.offset().top + (targetObj.outerHeight()/100)+centerPoint;
 				var scrollZoomIn = window.scrollY / (targetObj.offset().top-centerPoint);
 				var scrollZoomOut = (targetObj.offset().top-centerPoint) / window.scrollY;
+
 				var offSetVal = (scrollVal/10);		
+
 				var leftVal = offSetVal+"%";
 				var rightVal = - offSetVal+"%";
 				var opacity = 1+(scrollVal/250);
 				var FXState = 'in';
-				var pauseVal = 30;
-
-				if (targetObj.hasClass("scroll-fx-continuous"))
-				{
-					pauseVal = 0;
-				}
-
-
+			
 				if (offSetVal > 0 || !targetObj.is('[class*="-in"]')) // Prevent movement when in center of screen
 				{
-					if (!targetObj.hasClass("scroll-fx-continuous") || !targetObj.is('[class*="-out"]')) // Dont Freeze
-					{
-						leftVal = 0;
-						rightVal = 0;
-					}
-
+					leftVal = 0;
+					rightVal = 0;
+				
 					if (offSetVal > 0) // Lock Zooms
 					{
 						scrollZoomIn = 1;
@@ -64,13 +57,13 @@ function scrollFX()
 					if (targetObj.is('[class*="-in-fade"],[class*="-out-fade"]')){targetObj.css({'opacity':'1.0'});} // Force 1.0 opacity
 				}
 			
-				if (offSetVal > pauseVal) // Exit Animation
+				if (offSetVal > 30) // Exit Animation
 				{
 					if (targetObj.is('[class*="-out"]'))
 					{
 						FXState = 'out';
-						leftVal = - Math.abs(offSetVal-pauseVal)+"%";
-						rightVal = Math.abs(offSetVal-pauseVal)+"%";
+						leftVal = - Math.abs(offSetVal-30)+"%";
+						rightVal = Math.abs(offSetVal-30)+"%";
 						opacity = (1-(scrollVal/250)+0.8);
 					}
 				}
@@ -145,4 +138,6 @@ function scrollFX()
 			}
 		});
 	}
+
+	
 }
