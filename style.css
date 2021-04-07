@@ -428,11 +428,6 @@ button{
 	stroke-linecap:round;
 }
 
-/* Hide Object */
-.object-hidden{
-	display:none;
-}
-
 /* = Custom Styling
 -------------------------------------------------------------- */
 
@@ -576,9 +571,6 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 .bg-MOSHED-2019-11-6-1-38-56{
 	background-image:url("img/MOSHED-2019-11-6-1-38-56.gif");
 }
-.bg-soooon{
-	background-image:url("img/soooon.gif");
-}
 .bg-MOSHED-2020-6-5-11-53-49{
 	background-image:url("img/MOSHED-2020-6-5-11-53-49.gif");
 }
@@ -599,6 +591,12 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 }
 .bg-Comp-22{
 	background-image:url("img/Comp_22.gif");
+}
+.bg-MOSHED-2021-3-1-17-33-16{
+	background-image:url("img/MOSHED-2021-3-1-17-33-16.gif");
+}
+.bg-brussosaintrogif{
+	background-image:url("img/brussosaintrogif.gif");
 }
 
 
