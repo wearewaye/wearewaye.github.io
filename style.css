@@ -464,7 +464,8 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 	font-weight:800;
 }
 .img-style{
-	;
+	width:1012px;
+	height:525px;
 }
 .h3-style{
 	font-family:Roboto;
