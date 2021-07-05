@@ -554,6 +554,11 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 .h1-error--style{
 	font-family:"HansonBold";
 }
+.buttonstay{
+	font-family:"HansonBold";
+	font-weight:bold;
+	font-size:72px;
+}
 
 /* = Colour
 -------------------------------------------------------------- */
@@ -580,6 +585,15 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 }
 .tc-white-2{
 	color:#FFFFFF!important;
+}
+
+/* Link colour styles */
+
+.ltc-white{
+	color:#FFFFFF!important;
+}
+.ltc-white:hover{
+	color:#cccccc!important;
 }
 
 /* Icon colour styles */
