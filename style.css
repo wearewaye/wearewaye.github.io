@@ -43,6 +43,14 @@ a:hover{text-decoration: none; cursor:pointer;}
 	font-style: normal;
 }
 
+@font-face {
+	font-family:'HelveticaNeueCyr-HeavyItalic';
+	src: url('./fonts/HelveticaNeueCyr-HeavyItalic/HelveticaNeueCyr-HeavyItalic.ttf');
+	src: url('./fonts/HelveticaNeueCyr-HeavyItalic/HelveticaNeueCyr-HeavyItalic.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
 /* = Blocs
 -------------------------------------------------------------- */
 
@@ -177,6 +185,9 @@ a:hover{text-decoration: none; cursor:pointer;}
 }
 .texture-darken::before{
 	background: rgba(0,0,0,0.5);
+}
+.texture-darken-strong::before{
+	background: rgba(0,0,0,0.8);
 }
 
 
@@ -528,6 +539,18 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 	padding-right:40px;
 	padding-left:40px;
 }
+.h1-stay-behind-style{
+	font-family:"HansonBold";
+}
+.h6-21-style{
+	font-family:"HelveticaNeueCyr-Medium";
+}
+.h1-kickstarter-style{
+	font-family:"HelveticaNeueCyr-Medium";
+}
+.h2-style{
+	font-family:"HelveticaNeueCyr-HeavyItalic";
+}
 
 /* = Colour
 -------------------------------------------------------------- */
@@ -551,6 +574,9 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 }
 .tc-black{
 	color:#000000!important;
+}
+.tc-white-2{
+	color:#FFFFFF!important;
 }
 
 /* Icon colour styles */
@@ -598,6 +624,18 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 }
 .bg-brussosaintrogif{
 	background-image:url("img/brussosaintrogif.gif");
+}
+.bg-BROKENGLASSLOGO{
+	background-image:url("img/BROKENGLASSLOGO.png");
+}
+.bg-01-film{
+	background-image:url("img/01_film-1.png");
+}
+.bg-01{
+	background-image:url("img/01.gif");
+}
+.bg-08-ending{
+	background-image:url("img/08_ending.png");
 }
 
 
