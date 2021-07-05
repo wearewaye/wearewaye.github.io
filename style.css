@@ -651,6 +651,9 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 .bg-01{
 	background-image:url("img/01.gif");
 }
+.bg-02-gun{
+	background-image:url("img/02_gun.png");
+}
 .bg-08-ending{
 	background-image:url("img/08_ending.png");
 }
