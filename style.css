@@ -680,12 +680,6 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 .bg-BROKENGLASSLOGO{
 	background-image:url("img/BROKENGLASSLOGO.png");
 }
-.bg-01-film{
-	background-image:url("img/01_film-1.png");
-}
-.bg-01{
-	background-image:url("img/01.gif");
-}
 .bg-02-gun{
 	background-image:url("img/02_gun.png");
 }
@@ -697,6 +691,9 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 }
 .bg-05-fotoannidipiombo{
 	background-image:url("img/05_fotoannidipiombo.png");
+}
+.bg-sbgif{
+	background-image:url("img/sbgif.gif");
 }
 
 
