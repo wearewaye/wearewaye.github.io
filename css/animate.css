@@ -3698,6 +3698,81 @@
   -webkit-animation-name: vanishIn;
   animation-name: vanishIn;
 }
+@-webkit-keyframes floating{
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+@keyframes floating{
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+.floating {
+  -webkit-animation-name: floating;
+  animation-name: floating;
+}
+
+@-webkit-keyframes rotate-clockwise {
+  0% {
+    -webkit-transform: rotateZ(0);
+            transform: rotateZ(0);
+  }
+  100% {
+    -webkit-transform: rotateZ(360deg);
+            transform: rotateZ(360deg);
+  }
+}
+@keyframes rotate-clockwise {
+  0% {
+    -webkit-transform: rotateZ(0);
+            transform: rotateZ(0);
+  }
+  100% {
+    -webkit-transform: rotateZ(360deg);
+            transform: rotateZ(360deg);
+  }
+}
+.rotate-clockwise {
+  -webkit-animation: rotate-clockwise 1s linear;
+          animation: rotate-clockwise 1s linear;
+}
+@-webkit-keyframes rotate-anti-clockwise {
+  0% {
+    -webkit-transform: rotateZ(0);
+            transform: rotateZ(0);
+  }
+  100% {
+    -webkit-transform: rotateZ(-360deg);
+            transform: rotateZ(-360deg);
+  }
+}
+@keyframes rotate-anti-clockwise {
+  0% {
+    -webkit-transform: rotateZ(0);
+            transform: rotateZ(0);
+  }
+  100% {
+    -webkit-transform: rotateZ(-360deg);
+            transform: rotateZ(-360deg);
+  }
+}
+.rotate-anti-clockwise {
+  -webkit-animation: rotate-anti-clockwise 1s linear;
+          animation: rotate-anti-clockwise 1s linear;
+}
 
 
 /*
@@ -3793,6 +3868,9 @@
 .hideMe{
     visibility:hidden;
 }
+
+span.animated{display:inline-block;}
+
 @media (max-width: 767px){
   .mob-disable-anim .animated{
     animation-duration: 0s;

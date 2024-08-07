@@ -16,6 +16,10 @@ body{
 .page-container{overflow: hidden;} /* Prevents unwanted scroll space when scroll FX used. */
 a,button{transition: background .3s ease-in-out;outline: none!important;} /* Prevent blue selection glow on Chrome and Safari */
 a:hover{text-decoration: none; cursor:pointer;}
+.scroll-fx-lock-init{position:fixed!important;top: 0;bottom: 0;left: :0;right: 0;z-index:99999;} /* ScrollFX Lock */
+.blocs-grid-container{display: grid!important;grid-template-columns: 1fr 1fr;grid-template-rows: auto auto;column-gap: 1.5rem;row-gap: 1.5rem;} /* CSS Grid */
+nav .dropdown-menu .nav-link{color:rgba(0,0,0,0.6)!important;} /* Maintain Downdown Menu Link Color in Navigation */
+[data-bs-theme="dark"] nav .dropdown-menu .nav-link{color:var(--bs-dropdown-link-color)!important;} /* Maintain Downdown Menu Link Color in Navigation in Darkmode */
 
 
 /* Preloader */
@@ -33,6 +37,7 @@ a:hover{text-decoration: none; cursor:pointer;}
 	src: url('./fonts/AktivGrotesk-Medium/AktivGrotesk-Medium.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
+	font-display:swap;
 }
 
 @font-face {
@@ -41,6 +46,7 @@ a:hover{text-decoration: none; cursor:pointer;}
 	src: url('./fonts/HansonBold/Hanson-Bold.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
+	font-display:swap;
 }
 
 @font-face {
@@ -49,6 +55,7 @@ a:hover{text-decoration: none; cursor:pointer;}
 	src: url('./fonts/HelveticaNeueCyr-HeavyItalic/HelveticaNeueCyr-HeavyItalic.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
+	font-display:swap;
 }
 
 /* = Blocs
@@ -326,6 +333,39 @@ a:hover{text-decoration: none; cursor:pointer;}
 /* = NavBar
 -------------------------------------------------------------- */
 
+/* Navbar Icon */
+.svg-menu-icon{
+	fill: none;
+	stroke: rgba(0,0,0,0.5);
+	stroke-width: 2px;
+	fill-rule: evenodd;
+}
+.navbar-dark .svg-menu-icon{
+	stroke: rgba(255,255,255,0.5);
+}
+.menu-icon-thin-bars{
+	stroke-width: 1px;
+}
+.menu-icon-thick-bars{
+	stroke-width: 5px;
+}
+.menu-icon-rounded-bars{
+	stroke-width: 3px;
+	stroke-linecap: round;
+}
+.menu-icon-filled{
+	fill: rgba(0,0,0,0.5);
+	stroke-width: 0px;
+}
+.navbar-dark .menu-icon-filled{
+	fill: rgba(255,255,255,0.5);
+}
+.navbar-toggler-icon{
+	background: none!important;
+	pointer-events: none;
+	width: 33px;
+	height: 33px;
+}
 /* Handle Multi Level Navigation */
 .dropdown-menu .dropdown-menu{
 	border:none}
@@ -598,48 +638,55 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 /* = Colour
 -------------------------------------------------------------- */
 
+/* Swatch Variables */
+:root{
+	
+	--swatch-var-3161:rgba(255,255,255,1.0);
+	
+	--swatch-var-4157:#000000;
+	
+	--swatch-var-6147:#000000;
+	
+	--swatch-var-1213:#560016;
+	
+	--swatch-var-2:#FFFFFF;
+	
+}
+
+
 /* Background colour styles */
 
-.bgc-white{
-	background-color:#FFFFFF;
+.bgc-3161{
+	background-color:var(--swatch-var-3161);
 }
-.bgc-black{
-	background-color:#000000;
+.bgc-4157{
+	background-color:var(--swatch-var-4157);
 }
-.bgc-white-2{
-	background-color:#FFFFFF;
+.bgc-2{
+	background-color:var(--swatch-var-2);
 }
 
 /* Text colour styles */
 
-.tc-white{
-	color:#FFFFFF!important;
+.tc-3161{
+	color:var(--swatch-var-3161)!important;
 }
-.tc-black{
-	color:#000000!important;
+.tc-4157{
+	color:var(--swatch-var-4157)!important;
 }
-.tc-white-2{
-	color:#FFFFFF!important;
-}
-
-/* Link colour styles */
-
-.ltc-white{
-	color:#FFFFFF!important;
-}
-.ltc-white:hover{
-	color:#cccccc!important;
+.tc-2{
+	color:var(--swatch-var-2)!important;
 }
 
 /* Icon colour styles */
 
-.icon-white{
-	color:#FFFFFF!important;
-	border-color:#FFFFFF!important;
+.icon-3161{
+	color:var(--swatch-var-3161)!important;
+	border-color:var(--swatch-var-3161)!important;
 }
-.icon-black{
-	color:#000000!important;
-	border-color:#000000!important;
+.icon-4157{
+	color:var(--swatch-var-4157)!important;
+	border-color:var(--swatch-var-4157)!important;
 }
 
 /* Bloc image backgrounds */
@@ -655,9 +702,6 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 }
 .bg-MOSHED-2020-7-9-20-14-16{
 	background-image:url("img/MOSHED-2020-7-9-20-14-16.gif");
-}
-.bg-MOSHED-2020-7-9-21-14-0{
-	background-image:url("img/MOSHED-2020-7-9-21-14-0.gif");
 }
 .bg-ezgif-com-resize{
 	background-image:url("img/ezgif.com-resize.gif");
@@ -679,21 +723,66 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 }
 .bg-BROKENGLASSLOGO{
 	background-image:url("img/BROKENGLASSLOGO.png");
+	background-image: -webkit-image-set(url("img/BROKENGLASSLOGO.webp") 1x,
+url("img/BROKENGLASSLOGO.webp") 2x);background-image: image-set(url("img/BROKENGLASSLOGO.png") 1x,
+url("img/BROKENGLASSLOGO.png") 2x,url("img/BROKENGLASSLOGO.webp") 1x,
+url("img/BROKENGLASSLOGO.webp") 2x);
 }
 .bg-02-gun{
 	background-image:url("img/02_gun.png");
+	background-image: -webkit-image-set(url("img/02_gun.webp") 1x,
+url("img/02_gun.webp") 2x);background-image: image-set(url("img/02_gun.png") 1x,
+url("img/02_gun.png") 2x,url("img/02_gun.webp") 1x,
+url("img/02_gun.webp") 2x);
 }
 .bg-08-ending{
 	background-image:url("img/08_ending.png");
+	background-image: -webkit-image-set(url("img/08_ending.webp") 1x,
+url("img/08_ending.webp") 2x);background-image: image-set(url("img/08_ending.png") 1x,
+url("img/08_ending.png") 2x,url("img/08_ending.webp") 1x,
+url("img/08_ending.webp") 2x);
 }
 .bg-MOSHED-2019-5-19-19-53-38{
 	background-image:url("img/MOSHED-2019-5-19-19-53-38.gif");
 }
 .bg-05-fotoannidipiombo{
 	background-image:url("img/05_fotoannidipiombo.png");
+	background-image: -webkit-image-set(url("img/05_fotoannidipiombo.webp") 1x,
+url("img/05_fotoannidipiombo.webp") 2x);background-image: image-set(url("img/05_fotoannidipiombo.png") 1x,
+url("img/05_fotoannidipiombo.png") 2x,url("img/05_fotoannidipiombo.webp") 1x,
+url("img/05_fotoannidipiombo.webp") 2x);
 }
 .bg-sbgif{
 	background-image:url("img/sbgif.gif");
+}
+.bg-980-APS-website-9{
+	background-image:url("img/980-APS-website-9.jpg");
+	background-image: -webkit-image-set(url("img/980-APS-website-9.webp") 1x,
+url("img/980-APS-website-9.webp") 2x);background-image: image-set(url("img/980-APS-website-9.jpg") 1x,
+url("img/980-APS-website-9.jpg") 2x,url("img/980-APS-website-9.webp") 1x,
+url("img/980-APS-website-9.webp") 2x);
+}
+.bg-MOSHED-2024-8-6-11-6-58{
+	background-image:url("img/MOSHED-2024-8-6-11-6-58.jpg");
+	background-image: -webkit-image-set(url("img/MOSHED-2024-8-6-11-6-58.webp") 1x,
+url("img/MOSHED-2024-8-6-11-6-58.webp") 2x);background-image: image-set(url("img/MOSHED-2024-8-6-11-6-58.jpg") 1x,
+url("img/MOSHED-2024-8-6-11-6-58.jpg") 2x,url("img/MOSHED-2024-8-6-11-6-58.webp") 1x,
+url("img/MOSHED-2024-8-6-11-6-58.webp") 2x);
+}
+.bg-MOSHED-2024-8-6-11-18-50{
+	background-image:url("img/MOSHED-2024-8-6-11-18-50.gif");
+}
+.bg-MOSHED-2024-8-7-20-48-27{
+	background-image:url("img/MOSHED-2024-8-7-20-48-27.gif");
+}
+.bg-MOSHED-2024-8-7-21-1-36{
+	background-image:url("img/MOSHED-2024-8-7-21-1-36.gif");
+}
+.bg-MOSHED-2024-8-7-21-5-35{
+	background-image:url("img/MOSHED-2024-8-7-21-5-35.gif");
+}
+.bg-MOSHED-2024-8-7-21-12-0{
+	background-image:url("img/MOSHED-2024-8-7-21-12-0.gif");
 }
 
 

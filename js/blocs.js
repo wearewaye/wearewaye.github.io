@@ -1,4 +1,4 @@
-// Blocs v4.2
+// Blocs v4.3
 document.addEventListener('DOMContentLoaded', function()
 {
   	setUpNavExtras();
@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', function()
 	// Auto Stop Videos When Modal Closes
 	$('.modal').on('hidden.bs.modal', function (e){e.target.querySelectorAll(".embed-responsive-item").forEach(videoItem =>{if (videoItem.tagName=='VIDEO'){videoItem.pause();}else{videoItem.setAttribute('src',videoItem.getAttribute('data-src'));}});});
 
+	
+
 	document.querySelectorAll("a[onclick^=\"scrollToTarget\"]").forEach(function(targetObj){targetObj.addEventListener("click", function(e){e.preventDefault();});}); // Prevent page jump on scroll to links
 	document.querySelectorAll(".nav-item [data-active-page]").forEach(function(targetObj){targetObj.classList.add(targetObj.getAttribute('data-active-page'));}); // Apply Active Link Classes
 
@@ -22,6 +24,9 @@ document.addEventListener('DOMContentLoaded', function()
 
 	// Internet Explorer Polyfill .matches()
 	if (!Element.prototype.matches) {Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;};
+
+	// Dark Mode
+	if (window.matchMedia("(prefers-color-scheme: dark)").matches) {document.body.classList.add("dark-theme");}
 
 	// Internet Explorer & Safari Polyfill .ScrollTo() - Animates
 	scrollToPolyFill();
@@ -118,7 +123,7 @@ function setUpSpecialNavs()
 	});
 
 	// Handle tint and close button touch events
-	delegateSelector('body', "mousedown touchstart", '.content-tint, .close-special-menu, .close-special-menu .close-icon', function(e)
+	delegateSelector('body', "mousedown touchend", '.content-tint, .close-special-menu, .close-special-menu .close-icon', function(e)
 	{
 		hideNav();
 	});
@@ -226,29 +231,28 @@ function setUpNavExtras()
 // Scroll to target
 function scrollToTarget(D,T)
 {
-	var speed = "1000";
+	var scrollY = window.scrollY || document.documentElement.scrollTop,
+        currentTime = 0,
+        speed = 1000,
+        scrollTargetY = 0; // Top of page (default)
 
 	if (D == 0) // Next Bloc
 	{
-		D = T.closest('.bloc').offsetHeight;
+		scrollTargetY = T.closest('.bloc').offsetHeight;
 	}
-	else if (D == 1) // Top of page
+	else if (D == 2) // Bottom of Page
 	{
-		D = 0;
+		scrollTargetY = document.documentElement.scrollHeight
 	}
-	else if (D == 2) // Bottom of page
+	else if (D != 1) // Specific Bloc
 	{
-		D = document.documentElement.scrollHeight
-	}
-	else // Specific Bloc
-	{
-		D = document.querySelector(D).getBoundingClientRect().top + window.scrollY;
+		scrollTargetY = document.querySelector(D).getBoundingClientRect().top + window.scrollY;
 
 		var stickyNav = document.querySelector(".sticky-nav");
 
 		if (stickyNav) // Has sticky navigation
 		{
-			D -= stickyNav.offsetHeight;
+			scrollTargetY -= stickyNav.offsetHeight;
 		}
 	}
 
@@ -257,7 +261,29 @@ function scrollToTarget(D,T)
 		speed = parseInt(T.getAttribute("data-scroll-speed"));
 	}
 
-	window.scrollTo({behavior: 'smooth', left: 0, top: D});
+	// Start Scroll Animation
+    var time = Math.max(.1, Math.min(Math.abs(scrollY - scrollTargetY) / speed, .8));
+
+    // Animate Scroll Frames
+    function animateFrame()
+    {
+        currentTime += 1 / 60;
+
+        var pos = currentTime / time;
+        var ease = Math.sin(pos * (Math.PI / 2)); 
+        var scrollPos = scrollTargetY;
+
+        if (pos < 1)
+        {
+            requestAnimFrame(animateFrame);
+            scrollPos = scrollY + ((scrollTargetY - scrollY) * ease);
+        }
+
+        window.scrollTo(0, scrollPos);
+    }
+
+    // Start Animation
+    animateFrame();
 }
 
 // Sticky Nav Bar Toggle On / Off
@@ -317,9 +343,11 @@ function stickyNavToggle()
 // Get Bloc Background Color
 function getBlocBgColor(targetContainer)
 {
-	var bgColor = window.getComputedStyle(targetContainer ,null).getPropertyValue('background-color');
+	var elementStyle = window.getComputedStyle(targetContainer ,null);
+	var bgColor = elementStyle.getPropertyValue('background-color');
+	var bgImg = elementStyle.getPropertyValue('background-image');
 	if (targetContainer.classList.contains('b-parallax')) bgColor = window.getComputedStyle(targetContainer.querySelector('.parallax') ,null).getPropertyValue('background-color');
-	if (bgColor == "rgba(0, 0, 0, 0)") bgColor = '#FFFFFF'; // Prevent Transparent
+	if (bgColor == "rgba(0, 0, 0, 0)" && bgImg.indexOf('gradient') ==-1) bgColor = '#FFFFFF'; // Prevent Transparent
 	return bgColor;
 }
 
@@ -376,7 +404,10 @@ function inViewCheck()
 			{
 			  	window.addEventListener(e, function(event)
 			  	{
-			  		targetObj.classList.remove(targetObj.getAttribute("data-appear-anim-style"));
+			  		if (!targetObj.classList.contains('animLoopInfinite')) // Dont Remove Animation From Inifinite Loop
+			  		{
+			  			targetObj.classList.remove(targetObj.getAttribute("data-appear-anim-style"));
+			  		}
 				});
 			});			
 		}
@@ -429,33 +460,36 @@ function setUpVisibilityToggle()
 
 	function toggleVisibility(targetObj)
 	{
-		if (!targetObj.classList.contains('toggled-item')) // Add toggle class
+		if (targetObj) // Item Exists
 		{
-	      	targetObj.classList.add('toggled-item');
-		}
+			if (!targetObj.classList.contains('toggled-item')) // Add toggle class
+			{
+		      	targetObj.classList.add('toggled-item');
+			}
 
-	    if (window.getComputedStyle(targetObj, null).getPropertyValue("height") == '0px' || targetObj.classList.contains('object-hidden')) // Show
-	    {
-	      	targetObj.classList.remove('object-hidden');
-	      	targetObj.style.removeProperty("display");
-	      	targetObj.style.height = 'auto';
-	      	var height = targetObj.clientHeight + 'px';
-	      	targetObj.style.height = '0px';
-	      	targetObj.offsetHeight; // Force Reflow
-	      	targetObj.classList.remove("toggled-item-hidden");
-	      	setTimeout(function (){targetObj.style.height = height;}, 0);
-	      	setTimeout(function (){targetObj.style.minHeight = height;targetObj.style.removeProperty("height");}, 360);
-	    }
-	    else // Hide
-	    {
-			targetObj.style.height = targetObj.scrollHeight + 'px'; // Start height
-			targetObj.offsetHeight; // Force Reflow
-			targetObj.style.removeProperty("min-height"); // Remove min-height
-			targetObj.classList.add('toggled-item-hidden');
-			window.setTimeout(function (){targetObj.style.height = "0";  if (targetObj.style.height == 0){targetObj.style.display = "none";}}, 0); // Set height to 0
-		}
+		    if (window.getComputedStyle(targetObj, null).getPropertyValue("height") == '0px' || targetObj.classList.contains('object-hidden')) // Show
+		    {
+		      	targetObj.classList.remove('object-hidden');
+		      	targetObj.style.removeProperty("display");
+		      	targetObj.style.height = 'auto';
+		      	var height = targetObj.clientHeight + 'px';
+		      	targetObj.style.height = '0px';
+		      	targetObj.offsetHeight; // Force Reflow
+		      	targetObj.classList.remove("toggled-item-hidden");
+		      	setTimeout(function (){targetObj.style.height = height;}, 0);
+		      	setTimeout(function (){targetObj.style.minHeight = height;targetObj.style.removeProperty("height");}, 360);
+		    }
+		    else // Hide
+		    {
+				targetObj.style.height = targetObj.scrollHeight + 'px'; // Start height
+				targetObj.offsetHeight; // Force Reflow
+				targetObj.style.removeProperty("min-height"); // Remove min-height
+				targetObj.classList.add('toggled-item-hidden');
+				window.setTimeout(function (){targetObj.style.height = "0";  if (targetObj.style.height == 0){targetObj.style.display = "none";}}, 0); // Set height to 0
+			}
 
-		reCalculateParallax();
+			reCalculateParallax();
+		}
 	} 
 }
 
@@ -717,24 +751,27 @@ function setUpLightBox()
 	// Keyboard Navigation
 	window.addEventListener("keydown", event => 
 	{	
-  		var targetBtn = document.querySelector('.prev-lightbox');
+		if (document.querySelector('#lightbox-modal'))
+		{
+			var targetBtn = document.querySelector('.prev-lightbox');
 
-  		if (event.which == 37 || event.which == 39) // Left & Right Arrows
-	  	{
-	  		if (event.which == 39) // Arrow Right
-	  		{
-	  			targetBtn = document.querySelector('.next-lightbox');
-	  		}
+	  		if (event.which == 37 || event.which == 39) // Left & Right Arrows
+		  	{
+		  		if (event.which == 39) // Arrow Right
+		  		{
+		  			targetBtn = document.querySelector('.next-lightbox');
+		  		}
 
-	  		if (targetBtn.style.display != "none") // Lightbox Back
-			{
-				targetBtn.click();
-			}
-	  	}
-	  	else if (event.which == 27) // Escape - Close
-	  	{
-			document.getElementById('blocs-lightbox-close-btn').click();
-	  	}
+		  		if (targetBtn.style.display != "none") // Lightbox Back
+				{
+					targetBtn.click();
+				}
+		  	}
+		  	else if (event.which == 27) // Escape - Close
+		  	{
+				document.getElementById('blocs-lightbox-close-btn').click();
+		  	}
+		}
 	});
 }
 
@@ -762,8 +799,17 @@ function reCalculateParallax()
 // Add multi level dropdown support
 $.fn.dropdown=function(){var o=$.fn.dropdown;return function(d){"string"==typeof d&&"toggle"===d&&($(".has-child-dropdown-show").removeClass("has-child-dropdown-show"),$(this).closest(".dropdown").parents(".dropdown").addClass("has-child-dropdown-show"));var n=o.call($(this),d);return $(this).off("click.bs.dropdown"),n}}(),$(function(){$("body").on("click",'.dropdown [data-toggle="dropdown"]',function(o){$(this).dropdown("toggle"),o.stopPropagation()}),$("body").on("hide.bs.dropdown",".dropdown",function(o){$(this).is(".has-child-dropdown-show")&&($(this).removeClass("has-child-dropdown-show"),o.preventDefault()),o.stopPropagation()}),$('.dropdown [data-toggle="dropdown"]').on("click",function(o){$(this).dropdown("toggle"),o.stopPropagation()}),$(".dropdown").on("hide.bs.dropdown",function(o){$(this).is(".has-child-dropdown-show")&&($(this).removeClass("has-child-dropdown-show"),o.preventDefault()),o.stopPropagation()}),$("a.dropdown-toggle").click(function(o) {o.preventDefault();})});
 
+
+
+// Set Site Relative Path Variable
+var siteRelativeURLPath;
+(function(){var scriptUrl = new URL(document.currentScript.src);var parentDirectory = scriptUrl.pathname.substring(0, scriptUrl.pathname.lastIndexOf("/js/")+1);siteRelativeURLPath = scriptUrl.origin + parentDirectory;})();
+
 // Scroll To Poly Fill
 function scrollToPolyFill(){var o=window,t=document;if(!("scrollBehavior"in t.documentElement.style&&!0!==o.__forceSmoothScrollPolyfill__)){var l,e=o.HTMLElement||o.Element,r=468,i={scroll:o.scroll||o.scrollTo,scrollBy:o.scrollBy,elementScroll:e.prototype.scroll||n,scrollIntoView:e.prototype.scrollIntoView},s=o.performance&&o.performance.now?o.performance.now.bind(o.performance):Date.now,c=(l=o.navigator.userAgent,new RegExp(["MSIE ","Trident/","Edge/"].join("|")).test(l)?1:0);o.scroll=o.scrollTo=function(){void 0!==arguments[0]&&(!0!==f(arguments[0])?v.call(o,t.body,void 0!==arguments[0].left?~~arguments[0].left:o.scrollX||o.pageXOffset,void 0!==arguments[0].top?~~arguments[0].top:o.scrollY||o.pageYOffset):i.scroll.call(o,void 0!==arguments[0].left?arguments[0].left:"object"!=typeof arguments[0]?arguments[0]:o.scrollX||o.pageXOffset,void 0!==arguments[0].top?arguments[0].top:void 0!==arguments[1]?arguments[1]:o.scrollY||o.pageYOffset))},o.scrollBy=function(){void 0!==arguments[0]&&(f(arguments[0])?i.scrollBy.call(o,void 0!==arguments[0].left?arguments[0].left:"object"!=typeof arguments[0]?arguments[0]:0,void 0!==arguments[0].top?arguments[0].top:void 0!==arguments[1]?arguments[1]:0):v.call(o,t.body,~~arguments[0].left+(o.scrollX||o.pageXOffset),~~arguments[0].top+(o.scrollY||o.pageYOffset)))},e.prototype.scroll=e.prototype.scrollTo=function(){if(void 0!==arguments[0])if(!0!==f(arguments[0])){var o=arguments[0].left,t=arguments[0].top;v.call(this,this,void 0===o?this.scrollLeft:~~o,void 0===t?this.scrollTop:~~t)}else{if("number"==typeof arguments[0]&&void 0===arguments[1])throw new SyntaxError("Value could not be converted");i.elementScroll.call(this,void 0!==arguments[0].left?~~arguments[0].left:"object"!=typeof arguments[0]?~~arguments[0]:this.scrollLeft,void 0!==arguments[0].top?~~arguments[0].top:void 0!==arguments[1]?~~arguments[1]:this.scrollTop)}},e.prototype.scrollBy=function(){void 0!==arguments[0]&&(!0!==f(arguments[0])?this.scroll({left:~~arguments[0].left+this.scrollLeft,top:~~arguments[0].top+this.scrollTop,behavior:arguments[0].behavior}):i.elementScroll.call(this,void 0!==arguments[0].left?~~arguments[0].left+this.scrollLeft:~~arguments[0]+this.scrollLeft,void 0!==arguments[0].top?~~arguments[0].top+this.scrollTop:~~arguments[1]+this.scrollTop))},e.prototype.scrollIntoView=function(){if(!0!==f(arguments[0])){var l=function(o){for(;o!==t.body&&!1===d(o);)o=o.parentNode||o.host;return o}(this),e=l.getBoundingClientRect(),r=this.getBoundingClientRect();l!==t.body?(v.call(this,l,l.scrollLeft+r.left-e.left,l.scrollTop+r.top-e.top),"fixed"!==o.getComputedStyle(l).position&&o.scrollBy({left:e.left,top:e.top,behavior:"smooth"})):o.scrollBy({left:r.left,top:r.top,behavior:"smooth"})}else i.scrollIntoView.call(this,void 0===arguments[0]||arguments[0])}}function n(o,t){this.scrollLeft=o,this.scrollTop=t}function f(o){if(null===o||"object"!=typeof o||void 0===o.behavior||"auto"===o.behavior||"instant"===o.behavior)return!0;if("object"==typeof o&&"smooth"===o.behavior)return!1;throw new TypeError("behavior member of ScrollOptions "+o.behavior+" is not a valid value for enumeration ScrollBehavior.")}function p(o,t){return"Y"===t?o.clientHeight+c<o.scrollHeight:"X"===t?o.clientWidth+c<o.scrollWidth:void 0}function a(t,l){var e=o.getComputedStyle(t,null)["overflow"+l];return"auto"===e||"scroll"===e}function d(o){var t=p(o,"Y")&&a(o,"Y"),l=p(o,"X")&&a(o,"X");return t||l}function h(t){var l,e,i,c,n=(s()-t.startTime)/r;c=n=n>1?1:n,l=.5*(1-Math.cos(Math.PI*c)),e=t.startX+(t.x-t.startX)*l,i=t.startY+(t.y-t.startY)*l,t.method.call(t.scrollable,e,i),e===t.x&&i===t.y||o.requestAnimationFrame(h.bind(o,t))}function v(l,e,r){var c,f,p,a,d=s();l===t.body?(c=o,f=o.scrollX||o.pageXOffset,p=o.scrollY||o.pageYOffset,a=i.scroll):(c=l,f=l.scrollLeft,p=l.scrollTop,a=n),h({scrollable:c,method:a,startTime:d,startX:f,startY:p,x:e,y:r})}}
 
 // Add Event Listeners to Programically Added Elements
 function delegateSelector(e,t,c,n){t.split(" ").forEach(t=>{var a=document.querySelectorAll(e);[].forEach.call(a,function(e,a){e.addEventListener(t,function(e){e.target.matches(c)&&n(e)})})})}
+
+// http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
+window.requestAnimFrame = (function(){return  window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function( callback ){window.setTimeout(callback, 1000 / 60);};})();
