@@ -32,15 +32,6 @@ nav .dropdown-menu .nav-link{color:rgba(0,0,0,0.6)!important;} /* Maintain Downd
 -------------------------------------------------------------- */
 
 @font-face {
-	font-family:'AktivGrotesk-Medium';
-	src: url('./fonts/AktivGrotesk-Medium/AktivGrotesk-Medium.ttf');
-	src: url('./fonts/AktivGrotesk-Medium/AktivGrotesk-Medium.ttf') format('truetype');
-	font-weight: normal;
-	font-style: normal;
-	font-display:swap;
-}
-
-@font-face {
 	font-family:'HansonBold';
 	src: url('./fonts/HansonBold/Hanson-Bold.ttf');
 	src: url('./fonts/HansonBold/Hanson-Bold.ttf') format('truetype');
@@ -53,6 +44,15 @@ nav .dropdown-menu .nav-link{color:rgba(0,0,0,0.6)!important;} /* Maintain Downd
 	font-family:'HelveticaNeueCyr-HeavyItalic';
 	src: url('./fonts/HelveticaNeueCyr-HeavyItalic/HelveticaNeueCyr-HeavyItalic.ttf');
 	src: url('./fonts/HelveticaNeueCyr-HeavyItalic/HelveticaNeueCyr-HeavyItalic.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+	font-display:swap;
+}
+
+@font-face {
+	font-family:'AktivGrotesk-Medium';
+	src: url('./fonts/AktivGrotesk-Medium/AktivGrotesk-Medium.ttf');
+	src: url('./fonts/AktivGrotesk-Medium/AktivGrotesk-Medium.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 	font-display:swap;
@@ -81,9 +81,6 @@ nav .dropdown-menu .nav-link{color:rgba(0,0,0,0.6)!important;} /* Maintain Downd
 
 /* Sizes */
 
-.bloc-xxl{
-	padding:200px 20px;
-}
 .bloc-lg{
 	padding:100px 20px;
 }
@@ -159,6 +156,30 @@ nav .dropdown-menu .nav-link{color:rgba(0,0,0,0.6)!important;} /* Maintain Downd
 }
 .bloc-tile-2 .container, .bloc-tile-3 .container, .bloc-tile-4 .container{
 	width:100%;
+}
+
+
+/* Bloc Mask */
+
+.bloc-bg-mask{
+	position: absolute;
+	width:100%;
+	height: 100%;
+	text-align:center;
+	left:0;
+	right:0;
+	top:0;
+	bottom:0;
+	z-index: 0;
+	display: flex;
+	pointer-events: none;
+	align-items: flex-start;
+}
+.svg-mask{
+	width:100%;
+	height: 100%;
+	fill-rule: evenodd;
+	fill:#000000;
 }
 
 
@@ -434,6 +455,18 @@ button{
 	box-shadow: none;
 	padding:0;
 }
+.btn-wire{
+	background:transparent!important;
+	border:2px solid transparent;
+}
+.btn-wire:hover{
+	background:transparent!important;
+	border:2px solid transparent;
+}
+.btn-xl{
+	padding: 16px 40px;
+	font-size: 28px;
+}
 .a-block{
 	width:100%;
 	text-align:left;
@@ -453,16 +486,6 @@ button{
 }
 
 
-/* = Text & Icon Styles
--------------------------------------------------------------- */
-.blockquote{
-	padding:0 20px;
-	border-left:2px solid;
-}
-.blockquote.text-right{
-	border-left:0;
-	border-right:2px solid;
-}
 
 
 .card-sq, .card-sq .card-header, .card-sq .card-footer{
@@ -656,26 +679,23 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 
 /* Background colour styles */
 
-.bgc-3161{
-	background-color:var(--swatch-var-3161);
-}
 .bgc-4157{
 	background-color:var(--swatch-var-4157);
 }
-.bgc-2{
-	background-color:var(--swatch-var-2);
+.bgc-3161{
+	background-color:var(--swatch-var-3161);
 }
 
 /* Text colour styles */
 
+.tc-2{
+	color:var(--swatch-var-2)!important;
+}
 .tc-3161{
 	color:var(--swatch-var-3161)!important;
 }
 .tc-4157{
 	color:var(--swatch-var-4157)!important;
-}
-.tc-2{
-	color:var(--swatch-var-2)!important;
 }
 
 /* Icon colour styles */
@@ -683,10 +703,6 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 .icon-3161{
 	color:var(--swatch-var-3161)!important;
 	border-color:var(--swatch-var-3161)!important;
-}
-.icon-4157{
-	color:var(--swatch-var-4157)!important;
-	border-color:var(--swatch-var-4157)!important;
 }
 
 /* Bloc image backgrounds */
@@ -708,12 +724,6 @@ h1,h2,h3,h4,h5,h6,p,label,.btn,a{
 }
 .bg-MOSHED-2020-10-2-18-27-36{
 	background-image:url("img/MOSHED-2020-10-2-18-27-36.gif");
-}
-.bg-Comp-9{
-	background-image:url("img/Comp_9.gif");
-}
-.bg-Comp-22{
-	background-image:url("img/Comp_22.gif");
 }
 .bg-MOSHED-2021-3-1-17-33-16{
 	background-image:url("img/MOSHED-2021-3-1-17-33-16.gif");
@@ -777,9 +787,6 @@ url("img/MOSHED-2024-8-6-11-6-58.webp") 2x);
 }
 .bg-MOSHED-2024-8-7-21-1-36{
 	background-image:url("img/MOSHED-2024-8-7-21-1-36.gif");
-}
-.bg-MOSHED-2024-8-7-21-5-35{
-	background-image:url("img/MOSHED-2024-8-7-21-5-35.gif");
 }
 .bg-MOSHED-2024-8-7-21-12-0{
 	background-image:url("img/MOSHED-2024-8-7-21-12-0.gif");
